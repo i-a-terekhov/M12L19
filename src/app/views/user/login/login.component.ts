@@ -34,11 +34,11 @@ export class LoginComponent {
               throw new Error(data.message ? data.message : 'Error with data on login'); // генерация ошибки, в том числе позволяет прервать код
             }
 
-            // Auth.setTokens(result.accessToken, result.refreshToken);
-            // Auth.setUserInfo({
-            //   fullName: result.fullName,
-            //   userEmail: email,
-            // });
+            this.authService.setTokens(data.accessToken, data.refreshToken);
+            this.authService.setUserInfo({
+              fullName: data.fullName,
+              userId: data.userId,
+            });
             this.router.navigate(['/choice']);
           },
           error: (error: HttpErrorResponse) => {

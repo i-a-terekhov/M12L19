@@ -11,7 +11,8 @@ const routes: Routes = [
       {path: '', component: MainComponent},
       {path: '', loadChildren: () => import('./views/user/user.module').then(m => m.UserModule)}
     ]
-  }
+  },
+  {path: 'choice', redirectTo: ''},  // пока не сделали страницу choice
 ];
 
 @NgModule({
