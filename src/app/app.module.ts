@@ -17,7 +17,7 @@ import {RouterModule} from "@angular/router";
     FooterComponent,
     MainComponent
   ],
-  imports: [
+  imports: [  // при ленивой загрузке модули в app.module НЕ импортируются (подключаются через роутинг)
     BrowserModule,
     RouterModule,
     AppRoutingModule
