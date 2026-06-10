@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment.development";
 import {LoginResponseType} from "../../../types/login-response.type";
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {UserInfoType} from "../../../types/user-info.type";
 
 @Injectable({
@@ -13,7 +13,12 @@ export class AuthService {
   private refreshTokenKey: string = 'refreshToken';
   private userInfoKey: string = 'userInfo';
 
-  constructor(private http: HttpClient) { }
+  public isLogged$: Subject<boolean> = new Subject<boolean>();
+  private isLogged = false;
+
+  constructor(private http: HttpClient) {
+    this.isLogged = !!localStorage.getItem(this.accessTokenKey)
+  }
 
   login(email: string, password: string): Observable<LoginResponseType> {
     return this.http.post<LoginResponseType>(environment.apiHost + 'login', {
@@ -22,14 +27,22 @@ export class AuthService {
     });
   }
 
+  public getLoggedIn(): boolean {
+    return this.isLogged;
+  }
+
   public setTokens(accessToken: string, refreshToken: string): void {
     localStorage.setItem(this.accessTokenKey, accessToken);
     localStorage.setItem(this.refreshTokenKey, refreshToken);
+    this.isLogged = true;
+    this.isLogged$.next(true);
   }
 
   private removeTokens(): void {
     localStorage.removeItem(this.accessTokenKey);
     localStorage.removeItem(this.refreshTokenKey);
+    this.isLogged = false;
+    this.isLogged$.next(false);
   }
 
   public setUserInfo(info: UserInfoType): void {

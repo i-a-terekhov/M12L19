@@ -4,10 +4,10 @@
       <img src="assets/images/logo.png" alt="Логотип">
     </a>
 
-    <div class="profile" id="profile">
+    <div class="profile" id="profile" *ngIf="userInfo && userInfo.fullName">
       <img src="assets/images/profile.png" alt="Профиль" class="profile-image">
       <div class="profile-info">
-        <div class="profile-user" id="profile-full-name">Роман Чернов</div>
+        <div class="profile-user" id="profile-full-name">{{userInfo.fullName}}</div>
         <a routerLink="/logout" class="profile-logout">Выйти</a>
       </div>
     </div>
