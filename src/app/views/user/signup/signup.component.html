@@ -1,33 +1,37 @@
-<section class="form">
+<section class="form" [formGroup]="signupForm">
   <div class="container">
     <div class="form-content">
       <h1 class="form-title common-title">Регистрация</h1>
       <div class="form-details">
-        <div class="form-group">
-          <input type="text" class="form-input" id="name" required>
+        <div class="form-group" [ngStyle]="{'border-color': signupForm.get('name')?.invalid
+        && (signupForm.get('name')?.dirty || signupForm.get('name')?.touched) ? 'red' : ''}">
+          <input type="text" class="form-input" id="name" required formControlName="name">
           <label for="name" class="form-label">Имя</label>
         </div>
-        <div class="form-group">
-          <input type="text" class="form-input" id="last-name" required>
+        <div class="form-group" [ngStyle]="{'border-color': signupForm.get('lastName')?.invalid
+        && (signupForm.get('lastName')?.dirty || signupForm.get('lastName')?.touched) ? 'red' : ''}">
+          <input type="text" class="form-input" id="last-name" required formControlName="lastName">
           <label for="last-name" class="form-label">Фамилия</label>
         </div>
-        <div class="form-group">
-          <input type="text" class="form-input" id="email" required>
+        <div class="form-group" [ngStyle]="{'border-color': signupForm.get('email')?.invalid
+        && (signupForm.get('email')?.dirty || signupForm.get('email')?.touched) ? 'red' : ''}">
+          <input type="text" class="form-input" id="email" required formControlName="email">
           <label for="email" class="form-label">Электронная почта</label>
         </div>
-        <div class="form-group">
-          <input type="password" class="form-input" id="password" required>
+        <div class="form-group" [ngStyle]="{'border-color': signupForm.get('password')?.invalid
+        && (signupForm.get('password')?.dirty || signupForm.get('password')?.touched) ? 'red' : ''}">
+          <input type="password" class="form-input" id="password" required formControlName="password">
           <label for="password" class="form-label">Пароль</label>
         </div>
         <div class="form-agree">
-          <input type="checkbox" id="agree" required>
+          <input type="checkbox" id="agree" required formControlName="agree">
           <label for="agree">
             Я ознакомлен <a href="#">с правилами сайта</a>
           </label>
         </div>
       </div>
       <div class="form-button">
-        <button class="button" id="process" disabled>Перейти к выбору теста</button>
+        <button class="button" id="process" [disabled]="signupForm.invalid">Перейти к выбору теста</button>
       </div>
       <div class="form-link">Уже зарегистрированы? <a routerLink="/login">Войти</a></div>
     </div>
