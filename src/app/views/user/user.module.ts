@@ -18,11 +18,10 @@ import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule} from "@angular/materia
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
-    MatSnackBarModule,
     UserRoutingModule
   ],
   providers: [
-    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
+
   ]
 })
 export class UserModule { }
