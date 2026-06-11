@@ -80,6 +80,13 @@ export class AuthService {
     localStorage.removeItem(this.userInfoKey);
   }
 
+  public getTokens(): {accessToken: string | null, refreshToken: string | null} {
+    return {
+      accessToken: localStorage.getItem(this.accessTokenKey),
+      refreshToken: localStorage.getItem(this.refreshTokenKey),
+    }
+  }
+
   public getUserInfo(): UserInfoType | null {
     const userInfo: string | null = localStorage.getItem(this.userInfoKey);
     if (userInfo) {
