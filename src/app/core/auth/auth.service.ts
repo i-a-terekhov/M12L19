@@ -5,6 +5,7 @@ import {LoginResponseType} from "../../../types/login-response.type";
 import {Observable, Subject} from "rxjs";
 import {UserInfoType} from "../../../types/user-info.type";
 import {LogoutResponseType} from "../../../types/logout-response.type";
+import {SignupResponseType} from "../../../types/signup-response.type";
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,15 @@ export class AuthService {
 
   constructor(private http: HttpClient) {
     this.isLogged = !!localStorage.getItem(this.accessTokenKey)
+  }
+
+  signup(name: string, lastName: string, email: string, password: string): Observable<LoginResponseType> {
+    return this.http.post<SignupResponseType>(environment.apiHost + 'signup', {
+      name,
+      lastName,
+      email,
+      password,
+    });
   }
 
   login(email: string, password: string): Observable<LoginResponseType> {
