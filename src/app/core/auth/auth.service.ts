@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment.development";
 import {LoginResponseType} from "../../../types/login-response.type";
-import {Observable, Subject} from "rxjs";
+import {Observable, Subject, tap} from "rxjs";
 import {UserInfoType} from "../../../types/user-info.type";
 import {LogoutResponseType} from "../../../types/logout-response.type";
 import {SignupResponseType} from "../../../types/signup-response.type";
@@ -35,7 +35,18 @@ export class AuthService {
     return this.http.post<LoginResponseType>(environment.apiHost + 'login', {
       email,
       password,
-    });
+    })
+      .pipe(
+        tap((data: LoginResponseType) => {
+          if (data.fullName && data.userId && data.accessToken && data.refreshToken) {
+            this.setUserInfo({
+              fullName: data.fullName,
+              userId: data.userId,
+            });
+            this.setTokens(data.accessToken, data.refreshToken);
+          }
+        })
+      );
   }
 
   logout(): Observable<LogoutResponseType> {
