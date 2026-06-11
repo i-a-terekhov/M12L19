@@ -22,7 +22,7 @@ export class AuthService {
     this.isLogged = !!localStorage.getItem(this.accessTokenKey)
   }
 
-  signup(name: string, lastName: string, email: string, password: string): Observable<LoginResponseType> {
+  signup(name: string, lastName: string, email: string, password: string): Observable<SignupResponseType> {
     return this.http.post<SignupResponseType>(environment.apiHost + 'signup', {
       name,
       lastName,
