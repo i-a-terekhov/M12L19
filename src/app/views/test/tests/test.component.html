@@ -1,15 +1,19 @@
 <section class="test" *ngIf="quiz">
   <div class="container">
     <div class="test-pre-title" id="pre-title">
-      {{quiz.name}}
+      {{ quiz.name }}
     </div>
     <div class="test-progress-bar" id="progress-bar">
     </div>
     <div class="test-question">
       <div class="test-question-title" id="title">
-        <span>Вопрос 2:</span> Тут должен быть текст вопроса?
+        <span>Вопрос {{ currentQuestionIndex }}:</span> {{ activeQuestion.question }}
       </div>
       <div class="test-question-options" id="options">
+        <div class="test-question-option" *ngFor="let answer of activeQuestion.answers">
+          <input class="option-answer" id="answer-{{answer.id}}" type="radio" name="answer"
+                 value="{{answer.id}}">
+          <label for="answer-{{answer.id}}">{{answer.answer}}</label></div>
       </div>
     </div>
     <div class="test-actions">
@@ -18,7 +22,7 @@
       </div>
       <div class="test-time">
         <div class="test-time-text">Осталось времени:</div>
-        <div class="test-time-clock" id="timer">{{timerSeconds}}</div>
+        <div class="test-time-clock" id="timer">{{ timerSeconds }}</div>
       </div>
       <div class="test-next-action">
         <button class="button button-transparent" id="next" disabled>Далее</button>

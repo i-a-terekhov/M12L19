@@ -14,8 +14,10 @@ export class TestComponent {
   quiz!: QuizType;
   timerSeconds = 59;
   private interval: number = 0;
+  currentQuestionIndex: number = 1;
 
-  constructor(private activatedRoute: ActivatedRoute, private testService: TestService) {  }
+  constructor(private activatedRoute: ActivatedRoute, private testService: TestService) {
+  }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
@@ -33,21 +35,22 @@ export class TestComponent {
     })
   }
 
-
+  get activeQuestion() {
+    return this.quiz.questions[this.currentQuestionIndex - 1]
+  }
 
   startQuiz(): void {
     // progress bar
 
     // show question
 
-
-    this.interval = window.setInterval(() => {
-      this.timerSeconds--;
-      if (this.timerSeconds === 0) {
-        clearInterval(this.interval);
-        this.complete();
-      }
-    }, 1000);
+    // this.interval = window.setInterval(() => {  // временно, на период разработки
+    //   this.timerSeconds--;
+    //   if (this.timerSeconds === 0) {
+    //     clearInterval(this.interval);
+    //     this.complete();
+    //   }
+    // }, 1000);
   }
 
   complete(): void {
