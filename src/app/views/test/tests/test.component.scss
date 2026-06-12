@@ -1,0 +1,185 @@
+.test {
+  padding-top: 20px;
+  padding-bottom: 50px;
+
+  .test-pre-title {
+    font-size: 20px;
+    line-height: 24px;
+    color: #DCDCF3;
+  }
+
+  .test-progress-bar {
+    margin-top: 60px;
+    margin-bottom: 80px;
+    display: flex;
+
+    .test-progress-bar-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+
+      &:not(:first-child) {
+        margin-left: 130px;
+      }
+
+      &:not(:last-child)::before {
+        content: "";
+        z-index: -1;
+        position: absolute;
+        width: 184px;
+        background: #DCDCF3;
+        height: 6px;
+        left: 28px;
+        top: 10px;
+      }
+
+      &.complete:not(:last-child)::before {
+        background: #6933DC;
+      }
+
+      .test-progress-bar-item-circle {
+        width: 26px;
+        height: 26px;
+        background: #DCDCF3;
+        border-radius: 50%;
+      }
+
+      .test-progress-bar-item-text {
+        font-size: 13px;
+        line-height: 16px;
+        margin-top: 10px;
+      }
+
+      &.complete .test-progress-bar-item-circle,
+      &.active .test-progress-bar-item-circle {
+        background: #6933DC;
+      }
+
+      &.active::after {
+        content: "";
+        border-radius: 50%;
+        position: absolute;
+        z-index: 1;
+        width: 14px;
+        height: 14px;
+        background: #DCDCF3;
+        top: 6px;
+      }
+
+    }
+  }
+
+  .test-question-title {
+    font-size: 36px;
+    line-height: 43px;
+    font-family: 'Museo Sans Cyrl Bold', sans-serif;
+
+    span {
+      color: #6933DC;
+    }
+  }
+
+  .test-question-options {
+    margin-top: 58px;
+    min-height: 344px;
+
+    .test-question-option {
+      font-size: 20px;
+      line-height: 24px;
+      margin-bottom: 20px;
+      display: flex;
+
+      label {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .test-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .test-time {
+      display: flex;
+      align-items: center;
+
+      .test-time-text {
+        font-size: 17px;
+        line-height: 20px;
+        color: #6933DC;
+        margin-right: 15px;
+      }
+
+      .test-time-clock {
+        background-image: url('../../../../assets/images/time.png');
+        background-size: cover;
+        background-position: center;
+        width: 27px;
+        height: 29px;
+        font-size: 10px;
+        text-align: center;
+        line-height: 28px;
+      }
+    }
+  }
+
+  .pass-question {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+
+    a {
+      font-size: 17px;
+      line-height: 20px;
+      color: #6933DC;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &.disabled {
+        pointer-events: none;
+        color: gray;
+        text-decoration: none;
+        cursor: default;
+      }
+
+      img {
+        margin-left: 13px;
+      }
+    }
+  }
+}
+
+input[type='radio'] {
+  appearance: none;
+  -webkit-appearance: none;
+  min-width: 20px;
+  height: 20px;
+  border: 3px solid #6933DC;
+  border-radius: 50%;
+  margin: 0 13px 0 0;
+  transform: translateY(2px);
+
+  display: grid;
+  place-content: center;
+
+  &::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    box-shadow: inset 10px 10px #6933DC;
+    transition: .2s ease transform;
+    transform: scale(0);
+  }
+
+  &:checked::before {
+    transform: scale(1);
+  }
+}
