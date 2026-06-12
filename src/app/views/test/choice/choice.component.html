@@ -4,9 +4,12 @@
       <h1 class="common-title choice-title">Выберите <span>тему теста</span></h1>
       <div class="choice-description">Чтобы начать тест, выберите одну из предложенных ниже тем.</div>
       <div class="choice-options" id="choice-options">
-        <div class="choice-option" data-id="2">
-          <div class="choice-option-result"><div>Результат</div><div>3/5</div></div>
-          <div class="choice-option-text">НАЗВАНИЕ_ТЕСТА</div>
+        <div class="choice-option" *ngFor="let quiz of quizzes">
+          <div class="choice-option-result" *ngIf="quiz.result">
+            <div>Результат</div>
+            <div>{{ quiz.result }}</div>
+          </div>
+          <div class="choice-option-text">{{ quiz.name }}</div>
           <div class="choice-option-arrow"><img src="/assets/images/arrow.png" alt="Стрелка"></div>
         </div>
       </div>
