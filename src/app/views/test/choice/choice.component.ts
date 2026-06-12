@@ -4,6 +4,7 @@ import {QuizListType} from "../../../../types/quiz-list.type";
 import {AuthService} from "../../../core/auth/auth.service";
 import {DefaultResponseType} from "../../../../types/default-response.type";
 import {TestResultType} from "../../../../types/test-result.type";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-choice',
@@ -15,14 +16,13 @@ export class ChoiceComponent {
   quizzes: QuizListType[] = [];
   testResult: TestResultType[] | null = null;
 
-  constructor(private testService: TestService, private authService: AuthService) {
+  constructor(private testService: TestService, private authService: AuthService, private router: Router) {
   }
 
   ngOnInit(): void {
     this.testService.getTests()
       .subscribe((result: QuizListType[]) => {
         this.quizzes = result;
-
 
         const userInfo = this.authService.getUserInfo();
         if (userInfo) {
@@ -47,10 +47,13 @@ export class ChoiceComponent {
               }
             });
         }
-
       });
 
 
+  }
+
+  chooseQuiz(id: number): void {
+    this.router.navigate(['/test', + id]);
   }
 
 }
