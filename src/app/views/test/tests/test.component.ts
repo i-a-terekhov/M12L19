@@ -12,6 +12,8 @@ import {QuizType} from "../../../../types/quiz.type";
 export class TestComponent {
 
   quiz!: QuizType;
+  timerSeconds = 59;
+  private interval: number = 0;
 
   constructor(private activatedRoute: ActivatedRoute, private testService: TestService) {  }
 
@@ -25,10 +27,30 @@ export class TestComponent {
             }
 
             this.quiz = result as QuizType;
-            // this.startQuiz();
+            this.startQuiz();
           })
       }
     })
   }
 
+
+
+  startQuiz(): void {
+    // progress bar
+
+    // show question
+
+
+    this.interval = window.setInterval(() => {
+      this.timerSeconds--;
+      if (this.timerSeconds === 0) {
+        clearInterval(this.interval);
+        this.complete();
+      }
+    }, 1000);
+  }
+
+  complete(): void {
+
+  }
 }
