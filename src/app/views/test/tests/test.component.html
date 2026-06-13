@@ -11,9 +11,10 @@
       </div>
       <div class="test-question-options" id="options">
         <div class="test-question-option" *ngFor="let answer of activeQuestion.answers">
-          <input class="option-answer" id="answer-{{answer.id}}" type="radio" name="answer"
+          <input class="option-answer" id="answer-{{answer.id}}" [(ngModel)]="choosenAnswerId" type="radio" name="answer"
                  value="{{answer.id}}">
-          <label for="answer-{{answer.id}}">{{answer.answer}}</label></div>
+          <label for="answer-{{answer.id}}">{{answer.answer}}</label>
+        </div>
       </div>
     </div>
     <div class="test-actions">
@@ -25,7 +26,7 @@
         <div class="test-time-clock" id="timer">{{ timerSeconds }}</div>
       </div>
       <div class="test-next-action">
-        <button class="button button-transparent" id="next" disabled>Далее</button>
+        <button class="button button-transparent" id="next" [disabled]="!choosenAnswerId">Далее</button>
       </div>
     </div>
     <div class="pass-question">

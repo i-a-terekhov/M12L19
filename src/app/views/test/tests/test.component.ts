@@ -15,6 +15,7 @@ export class TestComponent {
   timerSeconds = 59;
   private interval: number = 0;
   currentQuestionIndex: number = 1;
+  choosenAnswerId: number | null = null;
 
   constructor(private activatedRoute: ActivatedRoute, private testService: TestService) {
   }
