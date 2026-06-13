@@ -1,10 +1,11 @@
 import {Component} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {TestService} from "../../../shared/services/test.service";
 import {DefaultResponseType} from "../../../../types/default-response.type";
 import {QuizType} from "../../../../types/quiz.type";
 import {ActionTestType} from "../../../../types/action-test.type";
 import {UserResultType} from "../../../../types/user-result.type";
+import {AuthService} from "../../../core/auth/auth.service";
 
 @Component({
   selector: 'app-test',
@@ -21,7 +22,10 @@ export class TestComponent {
   readonly userResult: UserResultType[] = [];
   actionTestType = ActionTestType;
 
-  constructor(private activatedRoute: ActivatedRoute, private testService: TestService) {
+  constructor(private activatedRoute: ActivatedRoute,
+              private testService: TestService,
+              private authService: AuthService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -55,6 +59,18 @@ export class TestComponent {
   }
 
   complete(): void {
+    const userInfo = this.authService.getUserInfo();
+    if (userInfo) {
+      this.testService.passQuiz(this.quiz.id, userInfo.userId, this.userResult)
+        .subscribe(result => {
+          if (result) {
+            if ((result as DefaultResponseType).error !== undefined) {
+              throw new Error((result as DefaultResponseType).message);
+            }
+            this.router.navigate(['/result'], {queryParams: {id: this.quiz.id}});
+          }
+        })
+    }
 
   }
 
@@ -76,22 +92,23 @@ export class TestComponent {
     }
 
     if (action === ActionTestType.next || action === ActionTestType.pass) {
+      if (this.currentQuestionIndex === this.quiz.questions.length) {
+        clearInterval(this.interval);
+        this.complete();
+        return;
+      }
+
       this.currentQuestionIndex++;
     } else {
       this.currentQuestionIndex--;
     }
+
 
     const currentResult: UserResultType | undefined = this.userResult.find(item => {
       return item.questionId === this.activeQuestion.id;
     });
     if (currentResult) {
       this.chosenAnswerId = currentResult.chosenAnswerId
-    }
-
-    if (this.currentQuestionIndex > this.quiz.questions.length) {
-      clearInterval(this.interval);
-      this.complete();
-      return;
     }
 
   }
